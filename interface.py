@@ -7,6 +7,8 @@ Created on Fri Sep 21 18:17:35 2018
 """
 from tkinter import Tk, Frame, Label, Entry, Button, StringVar
 
+from buttonNames import NAMES
+
 class MainWindow:
     def __init__(self):
         print ('hello')
@@ -40,10 +42,23 @@ class MainWindow:
         self.sdnfBtn.grid(row=0, column=2)
         self.deltBtn.grid(row=0, column=3)
         
+        i, j = 0, 0
+        for key in NAMES:
+            symbol, text = key, NAMES[key]
+            Button(self.buttFrame, 
+                   command = self.updateStmtEntry, 
+                   text = u"%s - %s" % (symbol, text)).grid(row=i, column=j)
+            i += 1
+            if i > len(NAMES)/2:
+                i = 0
+                j += 1
         print ("uyy")
         
     def clearStmtEntry(self):
         self.stmtVar.set("")
+        
+    def updateStmtEntry(self):
+        self.stmtVar.set(self.stmtVar.get() + "?")
         
     def run(self):
         self.root.mainloop()
