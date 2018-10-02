@@ -45,9 +45,11 @@ class MainWindow:
         i, j = 0, 0
         for key in NAMES:
             symbol, text = key, NAMES[key]
-            Button(self.buttFrame, 
-                   command = self.updateStmtEntry, 
-                   text = u"%s - %s" % (symbol, text)).grid(row=i, column=j)
+            b = Button(self.buttFrame,  
+                   text = u"%s - %s" % (symbol, text))
+            b.bind('<Button-1>', self.updateStmtEntry)
+            b.grid(row=i, column=j)
+        
             i += 1
             if i > len(NAMES)/2:
                 i = 0
@@ -57,8 +59,13 @@ class MainWindow:
     def clearStmtEntry(self):
         self.stmtVar.set("")
         
-    def updateStmtEntry(self):
-        self.stmtVar.set(self.stmtVar.get() + "?")
+    def updateStmtEntry(self, event):
+        d = event.widget.cget("text").split(' - ')[0]
+        e = self.stmtVar.get()
+        if len(e) > 20:
+            pass
+        else:
+            self.stmtVar.set(e + d)
         
     def run(self):
         self.root.mainloop()
