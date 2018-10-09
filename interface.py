@@ -5,7 +5,7 @@ Created on Fri Sep 21 18:17:35 2018
 
 @author: dasha
 """
-from tkinter import Tk, Frame, Label, Entry, Button, StringVar
+from tkinter import Tk, Frame, Label, Entry, Button, StringVar, Text
 
 from buttonNames import NAMES
 
@@ -54,11 +54,15 @@ class MainWindow:
             if i > len(NAMES)/2:
                 i = 0
                 j += 1
+                
+        self.outTable = Text(self.answFrame,height=50,width=50,font='Monospace 10')
+        self.outTable.pack()
+                
         print ("uyy")
         
     def clearStmtEntry(self):
         self.stmtVar.set("")
-        
+                
     def updateStmtEntry(self, event):
         d = event.widget.cget("text").split(' - ')[0]
         e = self.stmtVar.get()
