@@ -5,8 +5,10 @@ Created on Fri Sep 21 18:17:35 2018
 
 @author: dasha
 """
-from tkinter import Tk, Frame, Label, Entry, Button, StringVar, Text
+from tkinter import Tk, Frame, Label, Entry, Button, StringVar, Text, END
 
+from logic import parseInputString
+from truths import Truths
 from buttonNames import NAMES
 
 class MainWindow:
@@ -24,8 +26,8 @@ class MainWindow:
         
         self.stmtEntry = Entry(self.inptFrame, textvariable = self.stmtVar)
         
-        self.sknfBtn = Button(self.inptFrame, text = u"В СКНФ")
-        self.sdnfBtn = Button(self.inptFrame, text = u"В СДНФ")
+        self.sknfBtn = Button(self.inptFrame, text = u"В СКНФ", command = self.toSKNF)
+        self.sdnfBtn = Button(self.inptFrame, text = u"В СДНФ", command = self.toSDNF)
         self.deltBtn = Button(self.inptFrame, text = u"Сбросить", command = self.clearStmtEntry)
         
         Label(self.helpFrame, text = u'Я справка!').pack()
@@ -62,6 +64,21 @@ class MainWindow:
         
     def clearStmtEntry(self):
         self.stmtVar.set("")
+        
+    def toSKNF(self):
+        self.outTable.delete('1.0', END) 
+        e = self.stmtVar.get()
+        v = parseInputString(e)
+        t = Truths(v['Var'])
+        self.outTable.insert(1.0, t)
+            
+    def toSDNF(self):
+        self.outTable.delete('1.0', END) 
+        e = self.stmtVar.get()
+        v = parseInputString(e)
+        t = Truths(v['Var'])
+        self.outTable.insert(1.0, t)
+    
                 
     def updateStmtEntry(self, event):
         d = event.widget.cget("text").split(' - ')[0]
